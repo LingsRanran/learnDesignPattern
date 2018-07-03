@@ -24,3 +24,4 @@ let joinChoir = function(animal){
 
 joinChoir(duck);
 joinChoir(chicken);
+
