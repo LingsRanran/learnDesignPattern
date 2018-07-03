@@ -25,3 +25,37 @@ let joinChoir = function(animal){
 joinChoir(duck);
 joinChoir(chicken);
 
+//借用其他对象的方法
+class A {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+class B {
+    constructor() {
+        A.constructor.apply(this, arguments);
+    }
+    getName() {
+        return this.name;
+    }
+}
+
+let b = new B('Ranran');
+let a = new A('IronMan');
+
+
+console.log(b.getName());//借用了A的构造函数
+console.log(b.getName.apply(a));//借用了B的getName方法
+console.log(b.getName.call(a));//借用了B的getName方法
+console.log(typeof a);
+
+(function(){
+    Array.prototype.push.call(arguments,3);
+    console.log(arguments);//Arguments(3) [1, 2, 3]
+})(1,2);
+
+let c = {};
+Array.prototype.push.call(c,'first');
+console.log(c.length);
+console.log(c)
