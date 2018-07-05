@@ -48,7 +48,7 @@ let a = new A('IronMan');
 console.log(b.getName());//借用了A的构造函数
 console.log(b.getName.apply(a));//借用了B的getName方法
 console.log(b.getName.call(a));//借用了B的getName方法
-console.log(typeof a);
+console.log(typeof a);//
 
 (function(){
     Array.prototype.push.call(arguments,3);
