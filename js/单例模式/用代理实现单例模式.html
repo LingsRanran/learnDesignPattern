@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用代理实现单例模式</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let CreatDiv = function(html){
+        this.html = html;
+        this.init();
+    };
+
+    CreatDiv.prototype.init = function(){
+        let oDiv = document.createElement('div');
+        oDiv.innerHTML = this.html;
+        document.body.appendChild(oDiv);
+    };
+
+
+    //引入代理类
+    let ProxySingletonCreateDiv = (function(){
+        let instance;
+        
+        return function(html){
+            if(!instance){
+                instance = new CreatDiv(html);
+            }
+
+            return instance;
+        }
+    })();
+
+    let a = new ProxySingletonCreateDiv('ranran1');
+    let b = new ProxySingletonCreateDiv('ranran2');
+
+    console.log(a === b);//ture
+</script>
+</html>

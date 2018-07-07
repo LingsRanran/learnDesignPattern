@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>透明的单例模式</title>
+</head>
+<body>
+    
+</body>
+<script>
+    let CreatDiv = (function(){
+        let instance;
+
+        let CreatDiv = function(html){
+            if(instance){
+                return instance;
+            }
+            this.html = html;
+            this.init();
+
+            return instance = this;
+        };
+
+        CreatDiv.prototype.init = function(){
+            let oDiv = document.createElement('div');
+            oDiv.innerHTML = this.html;
+            document.body.appendChild(oDiv);
+        };
+
+        return CreatDiv;
+    })();
+
+    let a = new CreatDiv('ranran1');
+    let b = new CreatDiv('ranran2');
+
+    console.log(a === b);//true
+</script>
+</html>
