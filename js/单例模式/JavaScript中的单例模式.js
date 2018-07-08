@@ -16,3 +16,4 @@ MyApp.nameSpace('event');
 MyApp.nameSpace('dom.style');
 
 console.dir(MyApp)
+console.log(console)
