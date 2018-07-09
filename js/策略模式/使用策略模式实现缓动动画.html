@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <button class="aniBtn">linear</button> <button class="aniBtn">easeIn</button> <button class="aniBtn">strongEaseIn</button> <button class="aniBtn">strongEaseOut</button> <button class="aniBtn">sineaseIn</button> <button class="aniBtn">sineaseOut</button> <button class="RESET">RESET</button>
+    <div id="div" style="position: absolute;width: 100px;height: 100px;background-color: blue;color: white;">我是Div</div>
+</body>
+<script>
+    
+    let tween = {
+        /**
+         *@param {number} t : 动画已消耗的时间
+         *@param {number} b : 目标原始位置
+         *@param {number} c : 目标结束位置
+         *@param {number} d : 动画持续的总时间
+         */
+        linear:function(t,b,c,d){
+            return c * t / d + b;
+        },
+
+        /**
+         *@param {number} t : 动画已消耗的时间
+         *@param {number} b : 目标原始位置
+         *@param {number} c : 目标结束位置
+         *@param {number} d : 动画持续的总时间
+         */
+        easeIn:function(t,b,c,d){
+            return c * (t /= d) * t + b;
+        },
+
+        /**
+         *@param {number} t : 动画已消耗的时间
+         *@param {number} b : 目标原始位置
+         *@param {number} c : 目标结束位置
+         *@param {number} d : 动画持续的总时间
+         */
+        strongEaseIn:function(t,b,c,d){
+            return  c * ( t /= d ) * t * t * t * t + b; 
+        },
+
+        /**
+         *@param {number} t : 动画已消耗的时间
+         *@param {number} b : 目标原始位置
+         *@param {number} c : 目标结束位置
+         *@param {number} d : 动画持续的总时间
+         */
+        strongEaseOut:function(t,b,c,d){
+            return c * ( ( t = t / d - 1) * t * t * t * t + 1 ) + b; 
+        },
+
+        /**
+         *@param {number} t : 动画已消耗的时间
+         *@param {number} b : 目标原始位置
+         *@param {number} c : 目标结束位置
+         *@param {number} d : 动画持续的总时间
+         */
+        sineaseIn:function(t,b,c,d){
+            return c * ( t /= d) * t * t + b; 
+        },
+
+        /**
+         *@param {number} t : 动画已消耗的时间
+         *@param {number} b : 目标原始位置
+         *@param {number} c : 目标结束位置
+         *@param {number} d : 动画持续的总时间
+         */
+        sineaseOut:function(t,b,c,d){
+            return c * ( ( t = t / d - 1) * t * t + 1 ) + b; 
+        },
+    };
+    
+    class Animate{
+        constructor(dom){
+            this.dom = dom;             // 进行运动的 dom 节点 
+            this.startTime = 0;         // 动画开始时间 
+            this.startPos = 0;          // 动画开始时，dom 节点的位置，即 dom 的初始位置 
+            this.endPos= 0;             // 动画结束时，dom 节点的位置，即 dom 的目标位置
+            this.propertyName = null;   // dom 节点需要被改变的 css 属性名 
+            this.easing = null;         // 缓动算法 
+            this.duration = null;       // 动画持续时间 
+        }
+        
+        start(propertyName,endPos,duration,easing){
+            this.startTime = +new Date;  // 动画启动时间 
+            this.startPos = this.dom.getBoundingClientRect()[propertyName]; // dom 节点初始位置 
+            this.propertyName = propertyName; // dom 节点需要被改变的 CSS 属性名 
+            this.endPos = endPos;// dom 节点目标位置 
+            this.duration = duration; // 动画持续时间
+            this.easing = tween[easing]; // 缓动算法
+
+            let self = this;
+            let timer = setInterval(function(){ // 启动定时器，开始执行动画 
+                if(self.step() === false){      // 如果动画已结束，则清除定时器 
+                    clearInterval(timer);
+                }
+            },19);
+        }
+
+        step(){
+            let t = +new Date;
+            if(t >= (this.startTime + this.duration)){
+                this.update(this.endPos);
+                return false;
+            }
+
+            let pos = this.easing(t-this.startTime,this.startPos,this.endPos-this.startPos,this.duration);
+            this.update(pos);
+        }
+
+        update(pos){
+            this.dom.style[this.propertyName] = pos + 'px';
+        }
+    };
+
+    window.onload = function(){
+        let oDiv = document.getElementById('div');
+        let ani = new Animate(oDiv);
+
+        let arrBtn = document.getElementsByClassName('aniBtn');
+        Array.prototype.forEach.call(arrBtn,function(curVal){
+            let str = curVal.innerHTML;
+            curVal.onclick = function(){
+                ani.start('top',800,2000,str);
+            }
+        })
+
+        let resetBtn = document.getElementsByClassName('RESET')[0];
+        resetBtn.onclick = function(){
+            window.location.reload();
+        };
+
+    }
+</script>
+</html>
