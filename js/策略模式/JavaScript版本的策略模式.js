@@ -2,7 +2,7 @@
  * @Author: Ranran
  * @Date: 2018-07-09 15:44:23
  * @LastEditors: Ranran
- * @LastEditTime: 2018-07-09 16:56:54
+ * @LastEditTime: 2018-07-09 17:07:37
  * @Description: 
  * @Email: ranran0036@163.com
  * @GitHub: github.com/LingsRanran
@@ -26,5 +26,6 @@ let calcBouns = function(level,salary){
 
 
 console.log(calcBouns('S',10000));
+
 
 console.log(calcBouns('B',5000));

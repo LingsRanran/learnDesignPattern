@@ -2,7 +2,7 @@
  * @Author: Ranran
  * @Date: 2018-07-09 15:44:44
  * @LastEditors: Ranran
- * @LastEditTime: 2018-07-09 16:57:04
+ * @LastEditTime: 2018-07-09 17:07:31
  * @Description: 
  * @Email: ranran0036@163.com
  * @GitHub: github.com/LingsRanran
@@ -25,6 +25,7 @@ class PerformanceB{
         return salary * 2;
     }
 };
+
 
 class Bouns{
     constructor(){
